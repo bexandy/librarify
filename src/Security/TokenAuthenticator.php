@@ -2,7 +2,6 @@
 
 namespace App\Security;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -14,7 +13,17 @@ use Symfony\Component\HttpFoundation\Request;
 
 class TokenAuthenticator extends AbstractGuardAuthenticator
 {
-    const TOKEN = 'LIBRARIFY';
+    private $appApiToken;
+
+    /**
+     * @param $appApiToken
+     */
+    public function __construct(string $appApiToken)
+    {
+        $this->appApiToken = $appApiToken;
+    }
+
+
     /**
      * Called on every request to decide if this authenticator should be
      * used for the request. Returning `false` will cause this authenticator
@@ -36,7 +45,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider): ?UserInterface
     {
-        if (self::TOKEN !== $credentials) {
+        if ($this->appApiToken !== $credentials) {
             return null;
         }
         return new User();

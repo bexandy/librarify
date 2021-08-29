@@ -9,8 +9,9 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         api:
+            stateless: true
             pattern: ^/api
-            anonymous: true
+            anonymous: lazy
             lazy: true
             provider: app_user_provider
             guard:
