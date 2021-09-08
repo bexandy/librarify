@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,7 +43,7 @@ class LibraryController extends AbstractController
 	{
 		$book = new Book();
 		$response = new JsonResponse();
-		$title = $request->get('title',null);
+		$title = $request->get('title', null);
 		if (empty($title)) {
 			$response->setData([
                 'success' => false,

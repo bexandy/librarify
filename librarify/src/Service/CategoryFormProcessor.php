@@ -2,14 +2,10 @@
 
 namespace App\Service;
 
-use App\Entity\Book;
 use App\Entity\Category;
-use App\Form\Model\BookDto;
 use App\Form\Model\CategoryDto;
-use App\Form\Type\BookFormType;
 use App\Form\Type\CategoryFormType;
 use Symfony\Component\HttpFoundation\Request;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\FormFactoryInterface;
 
 /**
@@ -23,8 +19,8 @@ class CategoryFormProcessor
 	private $formFactory;
 	
 	function __construct(
-		CategoryManager $categoryManager,
-		FormFactoryInterface $formFactory
+	    CategoryManager $categoryManager,
+	    FormFactoryInterface $formFactory
 	)
 	{
 		$this->categoryManager = $categoryManager;
@@ -42,7 +38,7 @@ class CategoryFormProcessor
 		}
 
 		if ($form->isValid()) {
-            $category->setTitle($categoryDto->title);
+            $category->setName($categoryDto->name);
 			$this->categoryManager->save($category);
 			$this->categoryManager->reload($category);
 			return [$category, null];

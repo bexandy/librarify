@@ -5,6 +5,8 @@ namespace App\Service;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CategoryRepository;
 use App\Entity\Category;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * 	
@@ -21,14 +23,14 @@ class CategoryManager
 		$this->categoryRepository = $categoryRepository;
 	}
 
-	public function find(int $id): ?Category
+	public function find(UuidInterface $id): ?Category
 	{
 		return $this->categoryRepository->find($id);
 	}
 
 	public function create(): Category
 	{
-		$category = new Category();
+		$category = new Category(Uuid::uuid4());
 		return $category;
 	}
 

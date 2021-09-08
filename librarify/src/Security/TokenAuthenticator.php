@@ -16,7 +16,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     private $appApiToken;
 
     /**
-     * @param $appApiToken
+     * @param string $appApiToken
      */
     public function __construct(string $appApiToken)
     {
