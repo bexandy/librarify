@@ -41,7 +41,7 @@ class LibraryController extends AbstractController
 	 */
 	public function createBook(Request $request, EntityManagerInterface $em)
 	{
-		$book = new Book();
+		$book = Book::create();
 		$response = new JsonResponse();
 		$title = $request->get('title', null);
 		if (empty($title)) {

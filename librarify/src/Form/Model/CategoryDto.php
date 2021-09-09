@@ -2,15 +2,16 @@
 
 namespace App\Form\Model;
 
-use App\Entity\Category; 
+use App\Entity\Category;
+use Ramsey\Uuid\UuidInterface;
 
 /**
  * 
  */
 class CategoryDto 
 {
-	public $id;
-	public $name;
+	public ?UuidInterface $id = null;
+	public ?string $name = null;
 
 	public static function createFromCategory(Category $category): self
 	{
@@ -20,5 +21,21 @@ class CategoryDto
 
 		return $dto;
 	}
-	
+
+    /**
+     * @return UuidInterface|null
+     */
+    public function getId(): ?UuidInterface
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
 }
