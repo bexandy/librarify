@@ -12,8 +12,8 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
  */
 class BookNormalizer implements ContextAwareNormalizerInterface
 {
-	private $normalizer;
-	private $urlHelper;
+	private ObjectNormalizer $normalizer;
+	private UrlHelper $urlHelper;
 
 	public function __construct(ObjectNormalizer $normalizer, UrlHelper $urlHelper)
 	{

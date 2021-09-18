@@ -4,9 +4,9 @@ namespace App\Controller\Api;
 
 use App\Entity\Book;
 use App\Repository\BookRepository;
+use App\Service\Book\BookFormProcessor;
 use App\Service\Book\DeleteBook;
 use App\Service\Book\GetBook;
-use App\Service\BookFormProcessor;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\View\View;
@@ -33,13 +33,11 @@ class BooksController extends AbstractFOSRestController
 	 */
 	public function postAction(
 	    BookFormProcessor $bookFormProcessor,
-	    BookRepository $bookRepository,
 	    Request $request
 	)
 	{
-		$book = Book::create();
 
-		[$book, $error] = ($bookFormProcessor)($book, $request);
+		[$book, $error] = ($bookFormProcessor)($request);
 
 		$statusCode = $book ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST;
 		$data = $book ?? $error;
@@ -55,8 +53,7 @@ class BooksController extends AbstractFOSRestController
      */
     public function getSingleAction(
         string $id,
-        GetBook $getBook,
-        Request $request
+        GetBook $getBook
     )
     {
         $book = ($getBook)($id);
@@ -79,13 +76,8 @@ class BooksController extends AbstractFOSRestController
 	    Request $request
 	)
 	{
-		$book = ($getBook)($id);
 
-		if (!$book) {
-			return View::create('Book not found', Response::HTTP_BAD_REQUEST);		
-		}
-		
-		[$book, $error] = ($bookFormProcessor)($book, $request);
+		[$book, $error] = ($bookFormProcessor)($request, $id);
 
 		$statusCode = $book ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST;
 		$data = $book ?? $error;

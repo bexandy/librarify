@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Book;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -20,6 +22,10 @@ class BookRepository extends ServiceEntityRepository
         parent::__construct($registry, Book::class);
     }
 
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     */
     public function save(Book $book): Book
     {
         $this->getEntityManager()->persist($book);
@@ -27,12 +33,19 @@ class BookRepository extends ServiceEntityRepository
         return $book;
     }
 
+    /**
+     * @throws ORMException
+     */
     public function reload(Book $book): Book
     {
         $this->getEntityManager()->refresh($book);
         return $book;
     }
 
+    /**
+     * @throws OptimisticLockException
+     * @throws ORMException
+     */
     public function delete(Book $book)
     {
         $this->getEntityManager()->remove($book);
