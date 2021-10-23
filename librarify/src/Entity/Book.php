@@ -168,4 +168,8 @@ class Book
         $this->updateCategories(...$categories);
     }
 
+    public function __toString()
+    {
+        return $this->getTitle() ?? 'Libro';
+    }
 }

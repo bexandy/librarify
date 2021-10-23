@@ -26,7 +26,7 @@ class ScoreNormalizer implements ContextAwareNormalizerInterface
         return $data['value'] ?? null;
     }
 
-    public function supportsNormalization($data, $format = null, array $context = [])
+    public function supportsNormalization($data, $format = null, array $context = []): bool
     {
         return $data instanceOf Score;
     }
